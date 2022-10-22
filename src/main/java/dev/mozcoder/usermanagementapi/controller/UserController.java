@@ -2,8 +2,8 @@ package dev.mozcoder.usermanagementapi.controller;
 
 import dev.mozcoder.usermanagementapi.dto.UserDTO;
 import dev.mozcoder.usermanagementapi.model.User;
-import dev.mozcoder.usermanagementapi.repository.UserRepository;
 import dev.mozcoder.usermanagementapi.response.UserResponse;
+import dev.mozcoder.usermanagementapi.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,15 +17,16 @@ import java.util.List;
 
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
+
     @GetMapping("/user/list")
-    public ResponseEntity<List<User>> findAll(){
-        return ResponseEntity.ok().body(userRepository.findAll());
+    public ResponseEntity<List<UserResponse>> findAll(){
+        return ResponseEntity.ok().body(userService.findAll());
     }
 
     @PostMapping("/user/save")
@@ -39,7 +40,7 @@ public class UserController {
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setPhoneNumber(userDTO.getPhoneNumber());
-        User savedUser = userRepository.save(user);
+        User savedUser = userService.save(user);
 
         // convert User entity to Response class
         UserResponse response = new UserResponse();
