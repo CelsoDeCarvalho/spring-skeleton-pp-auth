@@ -1,42 +1,41 @@
-package dev.mozcoder.usermanagementapi.dto;
+package dev.mozcoder.usermanagementapi.response;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.persistence.Column;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class UserDTO{
+public class UserResponse {
 
-    @NotBlank(message = "Username cannot bet null")
-    @Size(min = 3,message = "Invalid username, at last 3 characters")
+    private String id;
     private String username;
-    @Size(min = 8,message = "Invalid password, at last 8 characters")
-    @NotBlank(message = "Password cannot bet null")
-    private String password;
-    @Email
-    @NotBlank(message = "Email cannot bet null")
     private String email;
     private LocalDate age;
-    @NotBlank(message = "First name cannot bet null")
     private String firstName;
-    @NotBlank(message = "Last name cannot bet null")
     private String lastName;
-    @NotBlank(message = "Phone number cannot bet null")
+    private LocalDateTime created;
+    private LocalDateTime updated;
     private String phoneNumber;
 
+    public UserResponse(){}
 
-    public UserDTO(){}
-
-    public UserDTO(String username, String password, String email, LocalDate age, String firstName, String lastName, String phoneNumber) {
+    public UserResponse(String id, String username, String email, LocalDate age, String firstName, String lastName, LocalDateTime created, LocalDateTime updated, String phoneNumber) {
+        this.id = id;
         this.username = username;
-        this.password = password;
         this.email = email;
         this.age = age;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.created = created;
+        this.updated = updated;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -45,14 +44,6 @@ public class UserDTO{
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
@@ -85,6 +76,22 @@ public class UserDTO{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
     }
 
     public String getPhoneNumber() {
