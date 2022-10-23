@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class User{
 
     @Id
-    @GenericGenerator(name = "user_id", strategy = "dev.mozcoder.usermanagementapi.util.UserUUID")
+    @GenericGenerator(name = "user_id", strategy = "dev.mozcoder.usermanagementapi.util.generators.UserUUID")
     @GeneratedValue(generator = "user_id")
     @Column(updatable = false,nullable = false)
     private String id;
