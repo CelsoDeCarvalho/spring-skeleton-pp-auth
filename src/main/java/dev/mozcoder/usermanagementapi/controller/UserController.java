@@ -47,9 +47,9 @@ public class UserController {
         response.setId(savedUser.getId());
         response.setUsername(savedUser.getUsername());
         response.setAge(savedUser.getAge());
-        response.setCreated(savedUser.getCreated());
+        response.setCreated(savedUser.getCreatedAt());
         response.setEmail(savedUser.getEmail());
-        response.setUpdated(savedUser.getUpdated());
+        response.setUpdated(savedUser.getUpdatedAt());
         response.setFirstName(savedUser.getFirstName());
         response.setLastName(savedUser.getLastName());
         response.setPhoneNumber(savedUser.getPhoneNumber());

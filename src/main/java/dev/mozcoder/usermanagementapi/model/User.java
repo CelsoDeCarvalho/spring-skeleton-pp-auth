@@ -1,6 +1,9 @@
 package dev.mozcoder.usermanagementapi.model;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,23 +24,25 @@ public class User{
     private LocalDate age;
     private String firstName;
     private String lastName;
-    @Column(columnDefinition = "TIMESTAMP")
-    private LocalDateTime created = LocalDateTime.now();
-    @Column(columnDefinition = "TIMESTAMP")
-    private LocalDateTime updated = LocalDateTime.now();
+    @Column(columnDefinition = "TIMESTAMP", name = "created_at")
+    @CreatedDate
+    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(columnDefinition = "TIMESTAMP",name = "updated_at")
+    @LastModifiedDate
+    private LocalDateTime updatedAt = LocalDateTime.now();
     private String phoneNumber;
 
     public User(){}
 
-    public User(String username, String password, String email,LocalDate age, String firstName, String lastName, String phoneNumber) {
+    public User(String username, String password, String email, LocalDate age, String firstName, String lastName, LocalDateTime createdAt, LocalDateTime updatedAt, String phoneNumber) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.age = age;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.created = LocalDateTime.now();
-        this.updated = LocalDateTime.now();
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.phoneNumber = phoneNumber;
     }
 
@@ -97,20 +102,20 @@ public class User{
         this.lastName = lastName;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    public void setCreatedAt(LocalDateTime created) {
+        this.createdAt = created;
     }
 
-    public LocalDateTime getUpdated() {
-        return updated;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated(LocalDateTime updated) {
-        this.updated = updated;
+    public void setUpdatedAt(LocalDateTime updated) {
+        this.updatedAt = updated;
     }
 
     public String getPhoneNumber() {

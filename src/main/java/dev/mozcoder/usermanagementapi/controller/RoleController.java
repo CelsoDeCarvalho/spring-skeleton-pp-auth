@@ -1,5 +1,6 @@
 package dev.mozcoder.usermanagementapi.controller;
 
+import dev.mozcoder.usermanagementapi.dto.RoleDTO;
 import dev.mozcoder.usermanagementapi.model.Role;
 import dev.mozcoder.usermanagementapi.repository.RoleRepository;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,10 @@ public class RoleController {
     }
 
     @PostMapping("/role/save")
-    public ResponseEntity<Role> save(@RequestBody Role role){
+    public ResponseEntity<Role> save(@RequestBody RoleDTO roleDTO){
+        Role role = new Role();
+        role.setName(roleDTO.getName());
+        role.setDescription(roleDTO.getDescription());
         Role savedRole = roleRepository.save(role);
         return new ResponseEntity<Role>(savedRole, HttpStatus.CREATED);
     }
