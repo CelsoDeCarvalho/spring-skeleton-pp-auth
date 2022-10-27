@@ -1,8 +1,7 @@
 package dev.mozcoder.usermanagementapi.service;
 
 import dev.mozcoder.usermanagementapi.model.User;
-import dev.mozcoder.usermanagementapi.response.UserResponse;
-import org.springframework.stereotype.Service;
+import dev.mozcoder.usermanagementapi.dto.responses.UserResponse;
 
 import java.util.List;
 

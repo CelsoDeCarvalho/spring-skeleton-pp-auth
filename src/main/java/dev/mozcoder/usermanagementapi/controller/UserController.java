@@ -1,15 +1,19 @@
 package dev.mozcoder.usermanagementapi.controller;
 
-import dev.mozcoder.usermanagementapi.dto.UserDTO;
+import dev.mozcoder.usermanagementapi.dto.requests.UserRequest;
+import dev.mozcoder.usermanagementapi.dto.responses.RoleWithoutUsers;
+import dev.mozcoder.usermanagementapi.model.Role;
 import dev.mozcoder.usermanagementapi.model.User;
-import dev.mozcoder.usermanagementapi.response.UserResponse;
+import dev.mozcoder.usermanagementapi.dto.responses.UserResponse;
 import dev.mozcoder.usermanagementapi.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -30,16 +34,17 @@ public class UserController {
     }
 
     @PostMapping("/user/save")
-    public ResponseEntity<UserResponse> save(@RequestBody @Valid UserDTO userDTO){
+    public ResponseEntity<UserResponse> save(@RequestBody @Valid UserRequest userRequest){
         // convert UserDto to User entity
         User user = new User();
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
-        user.setAge(userDTO.getAge());
-        user.setEmail(userDTO.getEmail());
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setUsername(userRequest.getUsername());
+        user.setPassword(userRequest.getPassword());
+        user.setAge(userRequest.getAge());
+        user.setEmail(userRequest.getEmail());
+        user.setFirstName(userRequest.getFirstName());
+        user.setLastName(userRequest.getLastName());
+        user.setPhoneNumber(userRequest.getPhoneNumber());
+        user.setRoles(userRequest.getRoles());
         User savedUser = userService.save(user);
 
         // convert User entity to Response class
@@ -49,6 +54,17 @@ public class UserController {
         response.setAge(savedUser.getAge());
         response.setCreated(savedUser.getCreatedAt());
         response.setEmail(savedUser.getEmail());
+        Set<RoleWithoutUsers> roleRespons = new HashSet<>();
+
+        for (Role role:savedUser.getRoles()) {
+            RoleWithoutUsers roleWithoutUsers = new RoleWithoutUsers();
+            roleWithoutUsers.setId(role.getId());
+            roleWithoutUsers.setName(role.getName());
+            roleWithoutUsers.setDescription(role.getDescription());
+            roleRespons.add(roleWithoutUsers);
+        }
+
+        response.setRoles(roleRespons);
         response.setUpdated(savedUser.getUpdatedAt());
         response.setFirstName(savedUser.getFirstName());
         response.setLastName(savedUser.getLastName());

@@ -1,12 +1,16 @@
 package dev.mozcoder.usermanagementapi.service;
 
+import dev.mozcoder.usermanagementapi.dto.responses.RoleWithoutUsers;
+import dev.mozcoder.usermanagementapi.model.Role;
 import dev.mozcoder.usermanagementapi.model.User;
 import dev.mozcoder.usermanagementapi.repository.UserRepository;
-import dev.mozcoder.usermanagementapi.response.UserResponse;
+import dev.mozcoder.usermanagementapi.dto.responses.UserResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -39,6 +43,17 @@ public class UserServiceImpl implements UserService{
             response.setFirstName(user.getFirstName());
             response.setLastName(user.getLastName());
             response.setPhoneNumber(user.getPhoneNumber());
+
+            Set<RoleWithoutUsers> rolesResponse = new HashSet<>();
+
+            for (Role role:user.getRoles()) {
+                RoleWithoutUsers roleWithoutUsers = new RoleWithoutUsers();
+                roleWithoutUsers.setId(role.getId());
+                roleWithoutUsers.setName(role.getName());
+                roleWithoutUsers.setDescription(role.getDescription());
+                rolesResponse.add(roleWithoutUsers);
+            }
+            response.setRoles(rolesResponse);
             userResponses.add(response);
         }
 

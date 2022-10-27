@@ -1,13 +1,15 @@
-package dev.mozcoder.usermanagementapi.dto;
+package dev.mozcoder.usermanagementapi.dto.requests;
+
+import dev.mozcoder.usermanagementapi.model.Role;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
-public class UserDTO{
+public class UserRequest {
 
     @NotBlank(message = "Username cannot bet null")
     @Size(min = 3,message = "Invalid username, at last 3 characters")
@@ -25,11 +27,12 @@ public class UserDTO{
     private String lastName;
     @NotBlank(message = "Phone number cannot bet null")
     private String phoneNumber;
+    private Set<Role> roles = new HashSet<>();
 
 
-    public UserDTO(){}
+    public UserRequest(){}
 
-    public UserDTO(String username, String password, String email, LocalDate age, String firstName, String lastName, String phoneNumber) {
+    public UserRequest(String username, String password, String email, LocalDate age, String firstName, String lastName, String phoneNumber) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -93,5 +96,13 @@ public class UserDTO{
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

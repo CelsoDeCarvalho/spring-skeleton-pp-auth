@@ -1,8 +1,10 @@
 package dev.mozcoder.usermanagementapi.controller;
 
-import dev.mozcoder.usermanagementapi.dto.RoleDTO;
+import dev.mozcoder.usermanagementapi.dto.requests.RoleRequest;
+import dev.mozcoder.usermanagementapi.dto.responses.RoleResponse;
 import dev.mozcoder.usermanagementapi.model.Role;
 import dev.mozcoder.usermanagementapi.repository.RoleRepository;
+import dev.mozcoder.usermanagementapi.service.RoleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,24 +15,24 @@ import java.util.List;
 @RequestMapping("/api")
 public class RoleController {
 
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
-    public RoleController(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
+    public RoleController(RoleService roleService) {
+        this.roleService = roleService;
     }
 
     @PostMapping("/role/save")
-    public ResponseEntity<Role> save(@RequestBody RoleDTO roleDTO){
+    public ResponseEntity<Role> save(@RequestBody RoleRequest roleRequest){
         Role role = new Role();
-        role.setName(roleDTO.getName());
-        role.setDescription(roleDTO.getDescription());
-        Role savedRole = roleRepository.save(role);
+        role.setName(roleRequest.getName());
+        role.setDescription(roleRequest.getDescription());
+        Role savedRole = roleService.save(role);
         return new ResponseEntity<Role>(savedRole, HttpStatus.CREATED);
     }
 
     @GetMapping("/role/list")
-    public ResponseEntity<List<Role>> findAll(){
-        return  ResponseEntity.ok().body(roleRepository.findAll());
+    public ResponseEntity<List<RoleResponse>> findAll(){
+        return  ResponseEntity.ok().body(roleService.findAll());
     }
 
 }

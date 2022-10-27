@@ -7,6 +7,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -31,6 +33,18 @@ public class User{
     @LastModifiedDate
     private LocalDateTime updatedAt = LocalDateTime.now();
     private String phoneNumber;
+
+    @ManyToMany
+    @JoinTable(
+            name = "permissions",
+            joinColumns = {
+                    @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "role_id", referencedColumnName = "id")
+            }
+    )
+    private Set<Role> roles;
 
     public User(){}
 
@@ -124,5 +138,13 @@ public class User{
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

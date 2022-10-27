@@ -5,8 +5,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -25,6 +26,9 @@ public class Role {
     @Column(columnDefinition = "TIMESTAMP",name = "updated_at")
     @LastModifiedDate
     private LocalDateTime updatedAt = LocalDateTime.now();
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
 
     public Role(){}
 
@@ -73,5 +77,13 @@ public class Role {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

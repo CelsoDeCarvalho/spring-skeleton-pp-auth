@@ -1,18 +1,19 @@
-package dev.mozcoder.usermanagementapi.dto;
+package dev.mozcoder.usermanagementapi.dto.responses;
 
-import javax.validation.constraints.NotEmpty;
+public class RoleWithoutUsers {
 
-public class RoleDTO {
-
-    @NotEmpty
+    private String id;
     private String name;
     private String description;
 
-    public RoleDTO(){}
+    public RoleWithoutUsers(){}
 
-    public RoleDTO(String name, String description) {
-        this.name = name;
-        this.description = description;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
